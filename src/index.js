@@ -1,10 +1,12 @@
 import "dotenv/config";
+import http from "http";
 import express from "express";
 import cors from "cors";
 import { clerkMiddleware } from "@clerk/express";
 import usersRouter from "./routes/users.js";
 import ridesRouter from "./routes/rides.js";
 import driversRouter from "./routes/drivers.js";
+import { initSocket } from "./socket.js";
 
 const app = express();
 
@@ -22,5 +24,8 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: err.message || "Server error" });
 });
 
+const server = http.createServer(app);
+initSocket(server);
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
