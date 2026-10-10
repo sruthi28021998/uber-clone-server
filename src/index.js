@@ -7,6 +7,7 @@ import usersRouter from "./routes/users.js";
 import ridesRouter from "./routes/rides.js";
 import driversRouter from "./routes/drivers.js";
 import { initSocket } from "./socket.js";
+import receiptsRouter from "./routes/receipts.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.get("/api/health", (_req, res) => res.json({ ok: true }));
 app.use("/api/users", usersRouter);
 app.use("/api/rides", ridesRouter);
 app.use("/api/drivers", driversRouter);
+app.use("/api/receipts", receiptsRouter);
 
 app.use((err, _req, res, _next) => {
   console.error(err);
