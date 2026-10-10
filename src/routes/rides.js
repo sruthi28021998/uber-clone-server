@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
   try {
     const { data, error } = await supabase
       .from("rides")
-      .select("*")
+      .select("*, payments(status)")
       .or(`rider_id.eq.${req.user.id},driver_id.eq.${req.user.id}`)
       .order("created_at", { ascending: false });
     if (error) throw error;
@@ -34,7 +34,7 @@ router.get("/:id", async (req, res, next) => {
   try {
     const { data, error } = await supabase
       .from("rides")
-      .select("*, driver:users!driver_id(name, phone, image_url)")
+      .select("*, driver:users!driver_id(name, phone, image_url), payments(status)")
       .eq("id", req.params.id)
       .maybeSingle();
     if (error) throw error;
