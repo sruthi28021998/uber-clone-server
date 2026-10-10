@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { supabase } from "../config/supabase.js";
 import { requireDbUser } from "../middleware/auth.js";
+import { joinDrivers, leaveDrivers } from "../lib/realtime.js";
 
 const router = Router();
 router.use(requireDbUser);
@@ -22,8 +23,11 @@ router.patch("/me", async (req, res, next) => {
       .eq("id", req.user.id)
       .select()
       .single();
-
     if (error) throw error;
+
+    if (updates.role === "driver") joinDrivers(req.user.id);
+    else if (updates.role === "rider") leaveDrivers(req.user.id);
+
     res.json(data);
   } catch (err) {
     next(err);
