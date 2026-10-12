@@ -22,7 +22,6 @@ router.use(requireDbUser, (req, res, next) =>
 router.param("id", (_req, res, next, id) =>
   isUuid(id) ? next() : res.status(404).json({ error: "Not found" })
 );
-
 // Go online/offline and update location
 router.patch("/status", async (req, res, next) => {
   try {

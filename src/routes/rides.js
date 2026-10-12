@@ -7,6 +7,9 @@ import { emitToUser, emitToDrivers } from "../lib/realtime.js";
 
 const router = Router();
 router.use(requireDbUser);
+router.param("id", (_req, res, next, id) =>
+  isUuid(id) ? next() : res.status(404).json({ error: "Not found" })
+);
 
 router.get("/", async (req, res, next) => {
   try {
