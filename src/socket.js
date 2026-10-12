@@ -4,7 +4,9 @@ import { supabase } from "./config/supabase.js";
 import { setIo } from "./lib/realtime.js";
 
 export function initSocket(httpServer) {
-  const io = new Server(httpServer, { cors: { origin: process.env.CLIENT_URL } });
+    const io = new Server(httpServer, {
+    cors: { origin: process.env.CLIENT_URL.split(",").map((s) => s.trim()) },
+  });
 
   // Only signed-in users with a DB record can connect
   io.use(async (socket, next) => {
