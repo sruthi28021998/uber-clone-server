@@ -17,7 +17,8 @@ router.get("/", async (req, res, next) => {
       .from("rides")
       .select("*, payments(status)")
       .or(`rider_id.eq.${req.user.id},driver_id.eq.${req.user.id}`)
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .limit(100);
     if (error) throw error;
     res.json(data);
   } catch (err) {

@@ -12,10 +12,30 @@ router.patch("/me", async (req, res, next) => {
   try {
     const { name, phone, image_url, role } = req.body;
     const updates = {};
+
     if (typeof name === "string") updates.name = name.trim().slice(0, 100);
-    if (typeof phone === "string") updates.phone = phone.trim().slice(0, 20);
-    if (typeof image_url === "string") updates.image_url = image_url.trim();
+
+    if (typeof phone === "string") {
+      const p = phone.trim();
+      if (!/^[0-9+\-\s()]{0,20}$/.test(p)) {
+        return res.status(400).json({ error: "Invalid phone number" });
+      }
+      updates.phone = p;
+    }
+
+    if (typeof image_url === "string") {
+      const url = image_url.trim();
+      if (url && !/^https?:\/\//i.test(url)) {
+        return res.status(400).json({ error: "Picture must be an http(s) link" });
+      }
+      updates.image_url = url.slice(0, 500);
+    }
+
     if (role === "rider" || role === "driver") updates.role = role;
+
+    if (!Object.keys(updates).length) {
+      return res.status(400).json({ error: "Nothing to update" });
+    }
 
     const { data, error } = await supabase
       .from("users")
