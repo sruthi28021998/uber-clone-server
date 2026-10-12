@@ -34,7 +34,7 @@ router.get("/:id", async (req, res, next) => {
   try {
     const { data, error } = await supabase
       .from("rides")
-      .select("*, driver:users!driver_id(name, phone, image_url), payments(status)")
+      .select("*, driver:users!driver_id(name, phone, image_url), payments(status), review:reviews(rating, comment)")
       .eq("id", req.params.id)
       .maybeSingle();
     if (error) throw error;

@@ -9,7 +9,7 @@ import driversRouter from "./routes/drivers.js";
 import { initSocket } from "./socket.js";
 import receiptsRouter from "./routes/receipts.js";
 import paymentsRouter from "./routes/payments.js";
-
+import reviewsRouter from "./routes/reviews.js";
 const app = express();
 
 app.use(cors({ origin: process.env.CLIENT_URL }));
@@ -22,6 +22,7 @@ app.use("/api/rides", ridesRouter);
 app.use("/api/drivers", driversRouter);
 app.use("/api/receipts", receiptsRouter);
 app.use("/api/payments", paymentsRouter);
+app.use("/api/reviews", reviewsRouter);
 
 app.use((err, _req, res, _next) => {
   console.error(err);
