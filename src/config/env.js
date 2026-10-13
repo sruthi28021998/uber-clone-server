@@ -4,8 +4,7 @@ const required = [
   "CLERK_SECRET_KEY",
   "SUPABASE_URL",
   "SUPABASE_SERVICE_ROLE_KEY",
-  "RAZORPAY_KEY_ID",
-  "RAZORPAY_KEY_SECRET",
+  "STRIPE_SECRET_KEY",
 ];
 
 const missing = required.filter((key) => !process.env[key]);
