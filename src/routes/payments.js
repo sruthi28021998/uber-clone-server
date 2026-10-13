@@ -7,6 +7,7 @@ import { onPaymentSucceeded } from "../lib/paymentEvents.js";
 
 const CURRENCY = "inr";
 const DRIVER_SHARE = 0.8;
+const NO_STRIPE = { error: "Stripe is not set up on the server yet" };
 
 const clientUrl = () =>
   (process.env.CLIENT_URL || "http://localhost:5173").split(",")[0].trim();
@@ -19,6 +20,7 @@ router.post("/checkout", async (req, res, next) => {
   try {
     const { ride_id } = req.body;
     if (!isUuid(ride_id)) return res.status(400).json({ error: "Invalid ride" });
+    if (!stripe) return res.status(503).json(NO_STRIPE);
 
     const { data: ride, error } = await supabase
       .from("rides")
@@ -98,6 +100,7 @@ router.post("/confirm", async (req, res, next) => {
     if (typeof session_id !== "string" || !session_id.startsWith("cs_")) {
       return res.status(400).json({ error: "Invalid payment" });
     }
+    if (!stripe) return res.status(503).json(NO_STRIPE);
 
     const { data: payment, error } = await supabase
       .from("payments")
