@@ -2,7 +2,7 @@ import { Router } from "express";
 import { supabase } from "../config/supabase.js";
 import { requireDbUser } from "../middleware/auth.js";
 import { haversineKm } from "../lib/fare.js";
-import { toNum } from "../lib/utils.js";
+import { toNum, isUuid } from "../lib/utils.js";
 import { emitToUser, emitToDrivers } from "../lib/realtime.js";
 
 const MATCH_RADIUS_KM = 10;
