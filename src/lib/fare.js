@@ -1,11 +1,12 @@
 const RATES = {
-  standard: { base: 2.5, perKm: 1.2 },
-  premium: { base: 4, perKm: 2.0 },
-  xl: { base: 5, perKm: 2.5 },
+  standard: { base: 40, perKm: 12 },
+  premium: { base: 60, perKm: 18 },
+  xl: { base: 80, perKm: 25 },
 };
 
 export const RIDE_TYPES = Object.keys(RATES);
 const ROAD_FACTOR = 1.3; // straight-line distance -> approximate road distance
+const MIN_FARE = 60; // keeps card payments above Stripe's minimum charge
 
 export function haversineKm(lat1, lng1, lat2, lng2) {
   const toRad = (d) => (d * Math.PI) / 180;
@@ -21,7 +22,7 @@ export const roadDistanceKm = (...args) => haversineKm(...args) * ROAD_FACTOR;
 
 export function calculateFare(type, km) {
   const r = RATES[type];
-  return Math.round((r.base + r.perKm * km) * 100) / 100;
+  return Math.max(MIN_FARE, Math.round((r.base + r.perKm * km) * 100) / 100);
 }
 
 export function estimateAll(km) {

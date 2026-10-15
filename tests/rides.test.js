@@ -21,7 +21,7 @@ describe("GET /api/rides/estimate", () => {
     const res = await request(app).get("/api/rides/estimate?plat=0&plng=0&dlat=0&dlng=0");
     expect(res.status).toBe(200);
     expect(res.body.distanceKm).toBe(0);
-    expect(res.body.fares.standard).toBe(2.5);
+    expect(res.body.fares.standard).toBe(60);
   });
 
   it("rejects missing coordinates", async () => {

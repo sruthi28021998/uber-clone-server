@@ -4,12 +4,13 @@ import { toNum, isUuid } from "../src/lib/utils.js";
 
 describe("fare", () => {
   it("calculates standard and premium fares", () => {
-    expect(calculateFare("standard", 10)).toBe(14.5);
-    expect(calculateFare("premium", 5)).toBe(14);
+    expect(calculateFare("standard", 10)).toBe(160);
+    expect(calculateFare("premium", 5)).toBe(150);
   });
 
-  it("returns base fares for zero distance", () => {
-    expect(estimateAll(0)).toEqual({ standard: 2.5, premium: 4, xl: 5 });
+  it("never goes below the minimum fare", () => {
+    expect(calculateFare("standard", 0)).toBe(60);
+    expect(estimateAll(0)).toEqual({ standard: 60, premium: 60, xl: 80 });
   });
 
   it("measures about 111 km per degree of latitude", () => {
