@@ -38,6 +38,7 @@ const limiter = (limit) =>
   });
 
 app.use("/api", limiter(1000));
+app.get("/", (_req, res) => res.json({ name: "RideNow API", status: "running" }));
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
 app.use("/api/users", usersRouter);
 app.use("/api/rides", ridesRouter);
