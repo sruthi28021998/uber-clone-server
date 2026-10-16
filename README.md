@@ -1,10 +1,10 @@
 # RideNow: Server
 
-[![Tests](https://github.com/sruthi28021998/uber-clone-server/actions/workflows/test.yml/badge.svg)](https://github.com/sruthi28021998/uber-clone-server/actions)
+
 
 Express and Socket.IO backend for a ride-hailing app (an Uber clone). It handles authentication checks, fares, driver matching, live updates, Stripe payments, receipts and reviews.
 
-**Health check:** https://YOUR-SERVICE.onrender.com/api/health
+
 **Client repo:** [uber-clone-client](https://github.com/sruthi28021998/uber-clone-client)
 
 ## Screenshots
